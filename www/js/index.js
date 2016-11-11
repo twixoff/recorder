@@ -91,9 +91,11 @@ var recorder = {
             var ft = new FileTransfer();
             ft.upload(fileURL, encodeURI("http://webmore.top/upload.php"), 
                 function (result) {
+                    alert('Response code: ' + result.responseCode + '\n\Bytes sent: ' + result.bytesSent);
                     console.log(JSON.stringify(result));
                 },
                 function (error) {
+                    alert('Error code: ' + error.code);
                     console.log(JSON.stringify(error));
                 }, options);
         }
