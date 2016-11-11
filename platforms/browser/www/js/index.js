@@ -8,17 +8,9 @@ var app = {
             this.onDeviceReady();
         }
     },
-    // Bind Event Listeners
-    //
-    // Bind any events that are required on startup. Common events are:
-    // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
-    // deviceready Event Handler
-    //
-    // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         document.getElementById('start-record').addEventListener("click", recorder.recordAudio);
         document.getElementById('stop-record').addEventListener("click", recorder.stopRecordAudio);
@@ -93,11 +85,8 @@ var recorder = {
             options.fileName = "recordforupload.amr";
             options.httpMethod = "POST";
             options.mimeType = "audio/amr";
-//            options.params = [{"name": "test", "nick": "Havabunga"}];
-            var params = {};
-            params.value1 = "test";
-            params.value2 = "param";
-            options.params = params;
+            options.chunkedMode = false;
+            options.params = {"name": "test", "nick": "Havabunga"};
 
             var ft = new FileTransfer();
             ft.upload(fileURL, encodeURI("http://webmore.top/upload.php"), 
