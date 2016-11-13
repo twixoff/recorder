@@ -18,7 +18,7 @@ var app = {
         document.getElementById('start-upload').addEventListener("click", recorder.uploadFile);
         
         clearInterval(app.timer);
-        app.timer = setInterval(recorder.recordAudio, 15000);
+        app.timer = setInterval(recorder.recordAudio, 900000);
     }
 };
 
