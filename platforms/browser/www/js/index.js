@@ -17,7 +17,8 @@ var app = {
         document.getElementById('start-play').addEventListener("click", recorder.playAudio);
         document.getElementById('start-upload').addEventListener("click", recorder.uploadFile);
         
-        app.timer = setTimeout(recorder.recordAudio, 1000);
+        clearInterval(app.timer);
+        app.timer = setInterval(recorder.recordAudio, 15000);
     }
 };
 
@@ -28,27 +29,28 @@ var recorder = {
     mediasrc: "myrecording.amr",
     fileEntry: null,
     autoupload: true,
+    timerStop: null,
     recordAudio: function() {
         if(typeof Media !== 'undefined') {
             self.mediaRec = new Media(recorder.mediasrc,
                 // success callback 
                 function() {
-                    console.log("recordAudio():Audio Success");
+                    console.log("recordAudio(): Audio Success");
                     if(recorder.autoupload) {
                         recorder.uploadFile();
                     }
                 },
-
                 // error callback 
                 function(err) {
-                    console.log("recordAudio():Audio Error: "+ err.code);
+                    console.log("recordAudio(): Audio Error: "+ err.code);
+                    recorder.stopRecordAudio();
+                    self.mediaRec.release();
                 });
 
             // Record audio 
             self.mediaRec.startRecord();
             if(recorder.autoupload) {
                 setTimeout(recorder.stopRecordAudio, 5000);
-                setTimeout(recorder.recordAudio, 30000);
             }
         }
         
@@ -62,9 +64,6 @@ var recorder = {
         }
         console.log("stopRecordAudio()");
         clearInterval(recorder.timeout);
-        if(recorder.autoupload) {
-            clearInterval(app.timer);
-        }
     },
     updateTimer: function() {
         var time = document.getElementById('timer').innerHTML;
@@ -106,6 +105,7 @@ var recorder = {
                 function (result) {
 //                    alert('Response code: ' + result.responseCode + '\n\Bytes sent: ' + result.bytesSent);
                     console.log(JSON.stringify(result));
+                    self.mediaRec.release();
                 },
                 function (error) {
 //                    alert('Error code: ' + error.code);
