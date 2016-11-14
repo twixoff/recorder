@@ -22,13 +22,22 @@ module.exports = [
             "cordova.plugins.backgroundMode",
             "plugin.backgroundMode"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-background-app/backgroundapp.js",
+        "id": "cordova-plugin-background-app.backgroundapp",
+        "pluginId": "cordova-plugin-background-app",
+        "clobbers": [
+            "cordova.backgroundapp"
+        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
     "cordova-plugin-device": "1.1.3",
-    "cordova-plugin-background-mode": "0.6.5"
+    "cordova-plugin-background-mode": "0.6.5",
+    "cordova-plugin-background-app": "2.0.2"
 }
 // BOTTOM OF METADATA
 });

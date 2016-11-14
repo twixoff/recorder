@@ -9,6 +9,9 @@
     "installed_plugins": {
         "cordova-plugin-background-mode": {
             "PACKAGE_NAME": "us.aviasoft.record"
+        },
+        "cordova-plugin-background-app": {
+            "PACKAGE_NAME": "us.aviasoft.record"
         }
     },
     "dependent_plugins": {
