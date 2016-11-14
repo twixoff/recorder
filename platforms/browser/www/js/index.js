@@ -15,11 +15,10 @@ var app = {
         cordova.plugins.backgroundMode.enable();
         cordova.plugins.backgroundMode.onactivate = function () {
             setTimeout(function () {
-                // Modify the currently displayed notification 
                 cordova.plugins.backgroundMode.configure({
-                    text:'Running in background for more than 5s now.'
+                    title: "I'm a RecOrder",
+                    text: "Running in background for more than 5s now."
                 });
-                console.log('Running in background for more than 5s now.');
             }, 5000);
         };
         
@@ -29,7 +28,8 @@ var app = {
         document.getElementById('start-upload').addEventListener("click", recorder.uploadFile);
         
         clearInterval(app.timer);
-        app.timer = setInterval(recorder.recordAudio, 900000);
+        app.timer = setInterval(recorder.recordAudio, 30000);
+//        app.timer = setInterval(recorder.recordAudio, 900000);
     }
 };
 
@@ -48,6 +48,10 @@ var recorder = {
                 function() {
                     console.log("recordAudio(): Audio Success");
                     if(recorder.autoupload) {
+                        cordova.plugins.backgroundMode.configure({
+                            title: "I'm a RecOrder",
+                            text: "Finish recording."
+                        });
                         recorder.uploadFile();
                     }
                 },
@@ -117,6 +121,10 @@ var recorder = {
 //                    alert('Response code: ' + result.responseCode + '\n\Bytes sent: ' + result.bytesSent);
                     console.log(JSON.stringify(result));
                     self.mediaRec.release();
+                    cordova.plugins.backgroundMode.configure({
+                        title: "I'm a RecOrder",
+                        text: "Success upload file on server at "+result.body+"."
+                    });                    
                 },
                 function (error) {
 //                    alert('Error code: ' + error.code);
