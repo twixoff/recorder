@@ -120,11 +120,12 @@ var recorder = {
                 function (result) {
 //                    alert('Response code: ' + result.responseCode + '\n\Bytes sent: ' + result.bytesSent);
                     console.log(JSON.stringify(result));
+                    console.log("Success upload file on server at "+result.response+".");
                     self.mediaRec.release();
                     cordova.plugins.backgroundMode.configure({
                         title: "I'm a RecOrder",
-                        text: "Success upload file on server at "+result.body+"."
-                    });                    
+                        text: "Success upload file on server at "+result.response+"."
+                    });
                 },
                 function (error) {
 //                    alert('Error code: ' + error.code);
