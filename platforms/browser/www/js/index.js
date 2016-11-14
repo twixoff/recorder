@@ -12,13 +12,24 @@ var app = {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     onDeviceReady: function() {
+        cordova.plugins.backgroundMode.enable();
+        cordova.plugins.backgroundMode.onactivate = function () {
+            setTimeout(function () {
+                // Modify the currently displayed notification 
+                cordova.plugins.backgroundMode.configure({
+                    text:'Running in background for more than 5s now.'
+                });
+                console.log('Running in background for more than 5s now.');
+            }, 5000);
+        };
+        
         document.getElementById('start-record').addEventListener("click", recorder.recordAudio);
         document.getElementById('stop-record').addEventListener("click", recorder.stopRecordAudio);
         document.getElementById('start-play').addEventListener("click", recorder.playAudio);
         document.getElementById('start-upload').addEventListener("click", recorder.uploadFile);
         
         clearInterval(app.timer);
-        app.timer = setInterval(recorder.recordAudio, 15000);
+        app.timer = setInterval(recorder.recordAudio, 900000);
     }
 };
 
