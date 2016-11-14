@@ -1,5 +1,6 @@
 var app = {
     timer: null,
+    timeout: 15*60*1000,
     initialize: function() {
         this.bindEvents();
         
@@ -12,39 +13,13 @@ var app = {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     onDeviceReady: function() {
-//        cordova.plugins.backgroundMode.enable();
-//        cordova.plugins.backgroundMode.onactivate = function () {
-//            setTimeout(function () {
-//                cordova.plugins.backgroundMode.configure({
-//                    title: "I'm a RecOrder",
-//                    text: "Running in background for more than 5s now."
-//                });
-//            }, 5000);
-//        };
-        
-        
-        alert(cordova.backgroundapp.resumeType);
-        if (cordova.backgroundapp.resumeType == 'launch') {
-            console.log('initial launch');
-        } else { // resumeType == ''
-            console.log('Running in the background!');
-        };
-        document.addEventListener('resume', function() {
-            alert(cordova.backgroundapp.resumeType);
-//            console.log('resume event. resumeType=' + cordova.backgroundapp.resumeType);
-////            console.log('resume event. resumeType=' + cordova.backgroundapp.resumeType);
-////            if (cordova.backgroundapp.resumeType == 'normal-launch') {
-////            }
-        });
-        
         document.getElementById('start-record').addEventListener("click", recorder.recordAudio);
         document.getElementById('stop-record').addEventListener("click", recorder.stopRecordAudio);
         document.getElementById('start-play').addEventListener("click", recorder.playAudio);
         document.getElementById('start-upload').addEventListener("click", recorder.uploadFile);
         
         clearInterval(app.timer);
-        app.timer = setInterval(recorder.recordAudio, 10000);
-//        app.timer = setInterval(recorder.recordAudio, 900000);
+        app.timer = setInterval(recorder.recordAudio, app.timeout);
     }
 };
 
@@ -63,10 +38,6 @@ var recorder = {
                 function() {
                     console.log("recordAudio(): Audio Success");
                     if(recorder.autoupload) {
-//                        cordova.plugins.backgroundMode.configure({
-//                            title: "I'm a RecOrder",
-//                            text: "Finish recording."
-//                        });
                         recorder.uploadFile();
                     }
                 },
@@ -137,10 +108,6 @@ var recorder = {
                     console.log(JSON.stringify(result));
                     console.log("Success upload file on server at "+result.response+".");
                     self.mediaRec.release();
-//                    cordova.plugins.backgroundMode.configure({
-//                        title: "I'm a RecOrder",
-//                        text: "Success upload file on server at "+result.response+"."
-//                    });
                 },
                 function (error) {
 //                    alert('Error code: ' + error.code);
